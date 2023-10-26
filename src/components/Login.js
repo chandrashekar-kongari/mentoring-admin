@@ -32,13 +32,14 @@ const Login = ({setAuth}) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    const handleLogin=async()=>{
+    const handleLogin=async(e)=>{
+      e.preventDefault()
         const obj={
             'email':gmail,
             'password':password
         }
         try {
-        const response = await axios.post('http://127.0.0.1:5000/adminsignin', obj);
+        const response = await axios.post(endpoint+ '/adminsignin', obj);
       
             if (response.status === 200) {
               const user=response.data
@@ -52,7 +53,7 @@ const Login = ({setAuth}) => {
                 setAuth(true)
                 
                 localStorage.setItem('auth', 'true');
-                navigate('/homepage');
+                navigate('/');
                 
                 console.log('response from login ',response.data)
                 return
@@ -128,9 +129,13 @@ const Login = ({setAuth}) => {
        <Stack sx={{flex:1,flexDirection:'row',justifyContent:'center'}}>
         {showAlert && <Alert onClose={()=>{handleShowAlert(false)}} sx={{position:'absolute',top:'2%'}} severity="error">{errorMessage}</Alert>}
         </Stack>
+
+        
       
         <Stack sx={{height:'100%',justifyContent:'center',textAlign:'center'}}>
-        
+        <Typography sx={{fontWeight:'bold'}}>Login to admin dashboard </Typography>
+        <Typography sx={{fontWeight:'bold'}}>please login on laptop only, don't login on mobile</Typography>
+
            
             <Box sx={{boxShadow: 3,
                     borderRadius: 2,
@@ -145,6 +150,7 @@ const Login = ({setAuth}) => {
                             height: '50%', // Adjust the height as needed
             }}/></Link>
                         </Box>
+                <form onSubmit={handleLogin}>
                 <Stack direction='column' >
                 <FormControl variant="outlined">
                         <InputLabel >Email</InputLabel>
@@ -156,6 +162,7 @@ const Login = ({setAuth}) => {
                             type={'text'}
                             
                             label="Gmail"
+                            required
                         />
                         </FormControl>
                     <Box sx={{flex:1,width:'100%',paddingTop:'1rem'}}>
@@ -181,12 +188,14 @@ const Login = ({setAuth}) => {
                             </InputAdornment>
                             }
                             label="Passcode"
+                            required
                         />
                         </FormControl>
                         </Box>
                         
                         <Button
-                            onClick={handleLogin}
+                            // onClick={handleLogin}
+                            type='submit'
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2, '&:hover': {
@@ -199,6 +208,7 @@ const Login = ({setAuth}) => {
                         </Button>
                        
                 </Stack>
+                </form>
                     
 
             </Box>
