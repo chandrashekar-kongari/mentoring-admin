@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch } from 'react-redux';
+import HistoryIcon from '@mui/icons-material/History';
 const SideNav = ({setAuth}) => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
@@ -15,8 +16,8 @@ const SideNav = ({setAuth}) => {
   const handleMatching=()=>{
     navigate('/matchmaking')
   }
-  const handleAllUsers=()=>{
-    navigate('/ongoingmentorships')
+  const handleHistory=()=>{
+    navigate('/recentmatches')
   }
   const handleMatchmaking=()=>{
     navigate('/matchmaking')
@@ -28,7 +29,7 @@ const SideNav = ({setAuth}) => {
     
   }
   return (
-    <Paper elevation={5}>
+    <Paper >
         <Stack sx={{flex:1,position:'fixed',justifyContent:'center',textAlign:'center',height:'100vh'}} gap={3}>
         <Tooltip title="Home" placement="right-start" arrow>
             <IconButton onClick={handleHome} color='white'>
@@ -40,9 +41,15 @@ const SideNav = ({setAuth}) => {
             <SocialDistanceIcon color='info'/>
         </IconButton>
         </Tooltip>
-        <Tooltip title="On going Mentorships" placement="right-start" arrow>
+        {/* <Tooltip title="On going Mentorships" placement="right-start" arrow>
         <IconButton color='white' onClick={handleAllUsers}>
             <PeopleAltIcon color='info'/>
+        </IconButton>
+        </Tooltip> */}
+        <Tooltip title="Recent Matches" placement="right-start" arrow>
+        <IconButton color='white' onClick={handleHistory}>
+            <HistoryIcon color='info'/>
+           
         </IconButton>
         </Tooltip>
         <Tooltip title="Logout" placement="right-start" arrow>

@@ -9,12 +9,26 @@ import { Box, Chip, IconButton, Stack } from '@mui/material';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import './displayCard.css'
+import { saveResid } from '../features/AppSlice';
+import {useDispatch} from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 export default function DisplayCard({c,data}) {
+  const navigate=useNavigate()
+  const dispatch=useDispatch()
+  const handleResumeClick = (resid) => {
+    // Change the route to /your-route and pass the message as a prop
+    dispatch(saveResid(resid))
+    // navigate('/viewresume')
+    // window.open('/viewresume', '_blank');
+  };
 
   const [ints,setInts]=React.useState([])
   const [skills,setSkills]=React.useState([])
-
+  const handleSetResume=(resid)=>{
+    
+    dispatch(saveResid(resid))
+  }
   React.useEffect(()=>{
     if(data.mentor=='true'){
       const i=data.mentorIntrests
@@ -26,8 +40,12 @@ export default function DisplayCard({c,data}) {
     }
     const s=data.skills
       setSkills(s)
-    
 
+      if(data.resume!=''){
+        handleSetResume(data.resume)
+      }
+    
+    console.log('skils ',data.skills)
   },[])
   return (
     <Card sx={{ maxWidth: 350 ,backgroundColor:c,padding:'1rem',margin:'0px',height:'230px'}} elevation={5}>
@@ -40,15 +58,17 @@ export default function DisplayCard({c,data}) {
             </Typography>
             </Box>
             <Box>
-                <IconButton size='small'>
+                {data.resume!='' &&
+                  <Link href={`viewresume/${data.resume}`} target="_blank">
                     <DocumentScannerIcon size='small'/>
-                </IconButton>
+                  </Link>
+                  
+                    
+                }
             </Box>
             <Box>
-              <Link href={data.linkedinProfile} target="_blank"><LinkedInIcon size='small'/></Link>
-                {/* <IconButton size='small'>
-                <LinkedInIcon size='small'/>
-                </IconButton> */}
+            {data.linkedinProfile!='' && <Link href={data.linkedinProfile} target="_blank"><LinkedInIcon size='small'/></Link>}
+                
             </Box>
         </Stack>
         <Typography variant="p"  className="block-ellipsis" color="text.secondary" sx={{lineHeight:1.5}}>
@@ -59,7 +79,7 @@ export default function DisplayCard({c,data}) {
         </Typography>
         <Box >
           {ints.map((int)=>{
-            return <Chip label={int.title}  size="small" sx={{margin:'3px',fontSize:'10px',color:'white',backgroundColor:'black'}}/>
+            return <Chip label={int.title}  size="small" sx={{margin:'3px',fontSize:'10px'}} color={int.color=='success'?'success':'default'}/>
           })}
             
             
@@ -69,7 +89,7 @@ export default function DisplayCard({c,data}) {
         </Typography>
         <Box sx={{padding:'0px',margin:'0px'}}>
         {skills.map((sk)=>{
-            return <Chip label={sk.title} size="small" sx={{margin:'3px',fontSize:'10px',color:'white',backgroundColor:'black'}}/>
+            return <Chip label={sk.title} size="small" sx={{margin:'3px',fontSize:'10px'}} color={sk.color=='success'?'success':'default'}/>
           })}
         </Box>
       </CardContent>

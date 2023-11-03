@@ -4,7 +4,8 @@ const initialState={
 
     ids:[],
     mentors:[],
-    mentees:[]
+    mentees:[],
+    resid:''
 
 }
 
@@ -23,9 +24,13 @@ export const appSlice=createSlice({
         saveMentees:(state,action)=>{
             const val=action.payload
             state.mentees=val
+        },
+        saveResid:(state,action)=>{
+            const val=action.payload
+            state.resid=val
         }
     }    
 })
 
-export const {saveIds,saveMentees,saveMentors} =appSlice.actions
+export const {saveIds,saveMentees,saveMentors,saveResid} =appSlice.actions
 export default appSlice.reducer

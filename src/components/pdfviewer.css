@@ -1,0 +1,6 @@
+.resdiv{
+    z-index: 1!important;
+    position: absolute;
+    height: 99.5vh;
+    width: 99.5%;
+}

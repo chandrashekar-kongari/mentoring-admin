@@ -47,6 +47,7 @@ const Login = ({setAuth}) => {
               const user=response.data
               console.log('user data ',user)
               if(user==null || Object.keys(user).length === 0){
+                setLoading(false)
                 setErrorMessage('Something went wrong')
                 handleShowAlert(true)
                 return
@@ -63,12 +64,14 @@ const Login = ({setAuth}) => {
               
       
             } else {
+              setLoading(false)
               console.error('Failed to submit user data.');
               setErrorMessage('Something went wrong')
                 handleShowAlert(true)
                 return
               }
             } catch (error) {
+              setLoading(false)
             console.error('Error:', error);
             setErrorMessage('Something went wrong')
                 handleShowAlert(true)
@@ -107,14 +110,17 @@ const Login = ({setAuth}) => {
                     
                     navigate('/home')
                 }else{
+                  setLoading(true)
                     Alert('Error')
                 }
               }
               else {
                 console.error('Failed to submit user data.');
+                setLoading(true)
               }
             } catch (error) {
               console.error('Error:', error);
+              setLoading(true)
             }    
     }
     const [showAlert,setShowAlert]=React.useState(false)

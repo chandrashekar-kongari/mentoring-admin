@@ -8,12 +8,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Stack,Box } from '@mui/material';
-import DD from './DD';
-import Mentors from './Mentors';
-import DisplayCard from './DisplayCard';
+
+import DisplayCard from '../DisplayCard';
 import axios from 'axios';
-import endpoint from '../API/api';
+import endpoint from '../../API/api';
 import CircularProgress from '@mui/material/CircularProgress';
+import LoadingComponent from '../LoadingComponent';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -27,7 +27,7 @@ const rows = [
   createData('','', 49, 3.9),
 ];
 
-export default function OnGoingMentorships() {
+export default function RecentHistory() {
 
     const [rows,setRows]=React.useState([
         {
@@ -75,7 +75,7 @@ export default function OnGoingMentorships() {
     }
   return (
     <Stack sx={{flexDirection:'row',display:'flex'}}>
-      {loading?<CircularProgress sx={{position:'fixed',top:'50%',left:'50%'}}/>:
+      {loading?<LoadingComponent loading={loading}/>:
       <>
       <Table sx={{ }} aria-label="simple table">
         <TableHead>

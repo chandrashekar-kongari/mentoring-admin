@@ -17,9 +17,13 @@ import AllUsers from './components/AllUsers';
 import OnGoingMentorships from './components/OnGoingMentorships';
 import Login from './components/Login';
 import MatchMaking from './components/matchmaking/MatchMaking';
+import RecentHistory from './components/history/RecentHistory';
+import PdfViewer from './components/PdfViewer';
+import {useSelector} from 'react-redux'
 const App = () => {
 
   const [auth,setAuth]=useState(false)
+  const resid=useSelector(state=>state.resid)
   useEffect(()=>{
     const data = localStorage.getItem('auth');
     console.log('local ',data)
@@ -34,6 +38,7 @@ const App = () => {
   return (
     // <MakeMatch/>
     <>
+
     {loading?<CircularProgress/>:<>
     {auth==true?
       <>
@@ -43,9 +48,11 @@ const App = () => {
             <Route path="/matching" element={<MakeMatch/>}/>
             <Route path="/ongoingmentorships" element={<OnGoingMentorships/>}/>
             <Route path="/matchmaking" element={<MatchMaking/>}/>
-            
+            <Route path="/recentmatches" element={<RecentHistory/>}/>
+            <Route path='/viewresume/:resid' element={<PdfViewer  />}/>   
       </Routes>
       </>:<Login setAuth={setAuth}/>}</>}
+      
     </>
   )
 }
