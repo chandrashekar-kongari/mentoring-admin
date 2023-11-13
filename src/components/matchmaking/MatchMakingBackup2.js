@@ -35,11 +35,10 @@ const MatchMaking = () => {
   const [zerousersmessage,setZeroUsersMessage]=useState('Meassage')
 
   const updateStatesWithId=(index,ind)=>{
-    console.log('i am here')
     const menteesdata=mentees
     const mentorsdata=mentors
     const menteesInts=mentees[index].mentorshipIntrests;
-    const mentorInts = mentorsdata[index][ind].mentorIntrests;
+      const mentorInts = mentorsdata[index][ind].mentorIntrests;
 
     const menteesSkills = menteesdata[index].skills;
       const mentorSkills = mentorsdata[index][ind].skills;
@@ -91,12 +90,8 @@ const MatchMaking = () => {
         mentorsdata[index][ind].totalnumberofvalues=menteesSkills.length+menteesInts.length
       }
 
-      console.log('mentees data',menteesdata)
-      console.log('mentors data',mentorsdata)
-      const md=menteesdata
-      const mord=mentorsdata
-      setMentees(prevArray =>md)
-      setMentors(prevArray =>mord)
+      setMentees(menteesdata)
+      setMentors(mentorsdata)
 
   }
   const updateStates = (menteesd,mentorsd) => {
@@ -455,7 +450,7 @@ const MatchMaking = () => {
            
             setLoading(false)
            
-            // window.location.reload();
+            window.location.reload();
             handleShowAlert(true)
             
     

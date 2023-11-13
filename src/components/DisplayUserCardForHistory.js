@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import StarIcon from '@mui/icons-material/Star';
 import { useState } from 'react';
-export default function DisplayCard({c,data}) {
+export default function DisplayUserCardForHistory({c,data}) {
   const navigate=useNavigate()
   const dispatch=useDispatch()
   const handleResumeClick = (resid) => {
@@ -43,9 +43,9 @@ export default function DisplayCard({c,data}) {
     else if(per>=40){
       return('#b7a388')
     }else if(per>=20){
-      return('#77c0f7')
+      return('#f0847d')
     }
-    return ('#a9ceeb')
+    return ('#f22011')
 
   }
   const [percentageColor,setPercentageColor]=useState('blue')
@@ -91,14 +91,14 @@ export default function DisplayCard({c,data}) {
             {data.linkedinProfile!='' && <Link href={data.linkedinProfile} target="_blank"><LinkedInIcon size='small'/></Link>}
                 
             </Box>
-            <Box>
+            {/* <Box>
             {data.mentor=='true' && <Typography gutterBottom variant="h6" sx={{fontSize:'14px',}} component="div"><Chip sx={{fontSize:'14px'}} size='small' label={data.menteeslist.length+' mentee(s)'}/></Typography>}
                 
             </Box>
             <Box>
             {data.mentor=='true' && <Typography gutterBottom variant="h6" sx={{fontSize:'14px'}} component="div"><Chip sx={{fontSize:'14px',backgroundColor:`${handleColorForPercentage(data.numberofvaluesmatched,data.totalnumberofvalues)}`}}  icon={<StarIcon />} size='small'   label={((data.numberofvaluesmatched/data.totalnumberofvalues)*100).toFixed(2)+'%'}/></Typography>}
                 
-            </Box>
+            </Box> */}
         </Stack>
         <Typography variant="p"  className="block-ellipsis" color="text.secondary" sx={{lineHeight:1.5}}>
           {data.additionalInformation}
@@ -108,7 +108,7 @@ export default function DisplayCard({c,data}) {
         </Typography>
         <Box >
           {ints.map((int)=>{
-            return <Chip label={int.title}  size="small" sx={{margin:'3px',fontSize:'10px'}} />
+            return <Chip label={int.title}  size="small" sx={{margin:'3px',fontSize:'10px'}} color={int.color=='success'?'success':'default'}/>
           })}
             
             
@@ -118,7 +118,7 @@ export default function DisplayCard({c,data}) {
         </Typography>
         <Box sx={{padding:'0px',margin:'0px'}}>
         {skills.map((sk)=>{
-            return <Chip label={sk.title} size="small" sx={{margin:'3px',fontSize:'10px'}} />
+            return <Chip label={sk.title} size="small" sx={{margin:'3px',fontSize:'10px'}} color={sk.color=='success'?'success':'default'}/>
           })}
         </Box>
       </CardContent>

@@ -14,6 +14,7 @@ import axios from 'axios';
 import endpoint from '../../API/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoadingComponent from '../LoadingComponent';
+import DisplayUserCardForHistory from '../DisplayUserCardForHistory';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -95,7 +96,7 @@ export default function RecentHistory() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 ,justifyContent:'left',flex:'1'} }}
             >
               <TableCell component="th" scope="row" align="left"> 
-              <DisplayCard c={'white'} data={row}/>
+              <DisplayUserCardForHistory c={'white'} data={row}/>
               </TableCell>
               
              
@@ -126,7 +127,7 @@ export default function RecentHistory() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 ,justifyContent:'left',flex:'1'} }}
             >
               <TableCell component="th" scope="row" align="left"> 
-              <DisplayCard c={'white'} data={row}/>
+              <DisplayUserCardForHistory c={'white'} data={row}/>
               </TableCell>
               
              

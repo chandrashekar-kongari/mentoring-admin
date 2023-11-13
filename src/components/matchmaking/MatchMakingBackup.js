@@ -22,6 +22,9 @@ const style = {
     p: 4,
   };
 const MatchMaking = () => {
+  
+
+  
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -595,8 +598,9 @@ const MatchMaking = () => {
                 {mentors.map((mentorlist,index)=>{
         return <TableRow>
         <TableCell component="th" scope="row"  > 
-        <Card elevation={5}>
+        <Card elevation={5} sx={{width:'350px'}}>
             <Carousel
+            
             onChange={(ind)=>{handleCarouselChange(index,ind)}}
             navButtonsProps={{          
             style: { 
