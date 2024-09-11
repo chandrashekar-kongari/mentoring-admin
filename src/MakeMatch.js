@@ -15,6 +15,7 @@ import DisplayCard from './components/DisplayCard';
 import { Box,Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import endpoint from './API/api';
+import SideNav from './components/SideNav';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -222,6 +223,9 @@ const MakeMatch = () => {
   
   
   return (
+
+    <>
+    <SideNav />
     <Stack>
       
       <Modal
@@ -253,6 +257,7 @@ const MakeMatch = () => {
         
       </Container>}
     </Stack>
+    </>
   )
 }
 export default MakeMatch

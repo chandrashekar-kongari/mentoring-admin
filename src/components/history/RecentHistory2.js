@@ -23,7 +23,7 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-const MatchMaking = () => {
+const RecentHistory2 = () => {
   
 
   
@@ -171,72 +171,13 @@ const MatchMaking = () => {
       },
     };
     try {
-      const response = await axios.get(endpoint+'/posiblematchs',axiosConfig);
+      const response = await axios.get(endpoint+'/recentmatches',axiosConfig);
       if (response.status === 200) {
 
-        // setMentees(response.data.mentees)
-        // setMentors(response.data.mentors)
+        setMentees(response.data.mentees)
+        setMentors(response.data.mentors)
         
-        updateStates(response.data.mentees,response.data.mentors)
-        
-        const menteeslen=response.data.mentees.length
-        const mentorslen=response.data.mentors.length
-        const ml=response.data.mentors
-        const arr=[]
-        //mentoractiveidlist
-        const allidslist=[]
-
-      
-        
-        if(mentorslen==1){
-          const menlen=response.data.mentors[0].length
-          if(menlen==0){
-            setZeroUsers(true)
-            setZeroUsersMessage('Sufficient users not available to match')
-            setLoading(false)
-            return
-          }
-        }
-
-        if(menteeslen==0 || mentorslen==0){
-          setZeroUsers(true)
-          setZeroUsersMessage('Sufficient users not available to match')
-          setLoading(false)
-          return
-        }
-        
-        for(var i=0;i<mentorslen;i++){
-            
-            var il=ml[i]
-            var illen=il.length
-            // const idslist=[]
-            // for (var j=0;j<illen;j++){
-            //     idslist.push(
-            //         {
-            //             id:0
-            //         }
-            //     )
-            // }
-            allidslist.push({id:0})
-
-        }
-        setMentorsactiveidslist(allidslist)
-        if(menteeslen>=mentorslen){
-          
-
-          for (let i = 1; i <= menteeslen; i++) {
-            arr.push({'id':i})
-          }
-          
-        }
-        else{
-          for (let i = 1; i <= mentorslen; i++) {
-            arr.push({'id':i})
-          }
-        }
-        setIds(arr)
         setLoading(false)
-        // updateColors()
 
       }else{
         navigate('/')
@@ -433,7 +374,7 @@ const MatchMaking = () => {
               Authorization:`Bearer ${token}`,
             },
           };
-          const response = await axios.post(endpoint+'/makematch',matchids,axiosConfig);
+          const response = await axios.post(endpoint+'/unmatch',matchids,axiosConfig);
           if (response.status === 200) {
 
 
@@ -484,9 +425,9 @@ const MatchMaking = () => {
         setModelIndex(id)
         const mtee=mentees[id]
         setMatchedmentee(mtee)
-        const index=mentoractiveidlist[id].id
+        // const index=mentoractiveidlist[id].id
 
-        const mtor=mentors[id][index]
+        const mtor=mentors[id]
         setMatchedmentor(mtor)
         handleOpen()
         
@@ -534,7 +475,7 @@ const MatchMaking = () => {
     <>
     <TopAppBar/>
     <Stack sx={{flexDirection:'row',justifyContent:'center',paddingTop:'1rem',paddingBottom:'1rem',backgroundColor:'#f7f7f7'}}>
-    <Typography variant='h6' sx={{fontWeight:'bold'}}>Pending matches</Typography>
+    <Typography variant='h6' sx={{fontWeight:'bold'}}>Completed matches</Typography>
   </Stack>
     <Stack>
     <Modal
@@ -545,7 +486,7 @@ const MatchMaking = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Are you sure, you want to match
+            Are you sure, you want to unmatch
           </Typography>
           <Stack flexDirection={'row'} gap={2}>
           {loading?<LoadingComponent loading={loading}/>:<>
@@ -556,7 +497,7 @@ const MatchMaking = () => {
             </>}
           </Stack>
 
-          <Button onClick={onClickYes} variant='contained' sx={{marginTop:'1rem',float:'right'}}>Yes</Button>
+          <Button onClick={onClickYes} variant='contained' color='error' sx={{marginTop:'1rem',float:'right'}}>Yes</Button>
         </Box>
       </Modal>
 
@@ -600,7 +541,7 @@ const MatchMaking = () => {
                     {mentees.map((mentee,index)=>{
                         return <TableRow>
                             <TableCell component="th" scope="row" align="center"> 
-                            <Button variant="contained" startIcon={<ArrowLeftIcon/>} endIcon={<ArrowRightIcon />} onClick={()=>{onMatch(index)}}>Match</Button>
+                            <Button variant="contained" color='error' startIcon={<ArrowLeftIcon/>} endIcon={<ArrowRightIcon />} onClick={()=>{onMatch(index)}}>Un Match</Button>
                         </TableCell>
                         </TableRow>
                 })}
@@ -625,30 +566,12 @@ const MatchMaking = () => {
                         </TableCell>
                         </TableRow>
                 })} */}
-                {mentors.map((mentorlist,index)=>{
+                {mentors.map((mentor,index)=>{
         return <TableRow>
         <TableCell component="th" scope="row"  > 
         <Card elevation={5} sx={{width:'440px',height:'330px'}}>
-            <Carousel
-            
-            onChange={(ind)=>{handleCarouselChange(index,ind)}}
-            navButtonsProps={{          
-            style: { 
-                opacity:0.3
-            }
-        
-        }} indicatorContainerProps={{
-            style:{
-                // backgroundColor:'white',
-                // elevation:0
-            }
-        }}
-        sx={{elevation:8,width: 440}}
-        indicators={false} autoPlay={false} navButtonsAlwaysVisible={true} animation='slide' duration='900'>
-                {
-                    mentorlist.map( (mentor, i) => <DisplayCard data={mentor} c={'white'} /> )
-                }
-            </Carousel>
+             <DisplayCard data={mentor} c={'white'} /> 
+               
         </Card>
         </TableCell>
                         </TableRow>
@@ -668,4 +591,4 @@ const MatchMaking = () => {
   )
 }
 
-export default MatchMaking
+export default RecentHistory2

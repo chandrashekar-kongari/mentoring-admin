@@ -36,16 +36,16 @@ export default function DisplayCard({c,data}) {
     const per=(mValues/tValues)*100
 
     if(per>=80){
-      return( '#eead0e')
+      return( '#05ed43')
     }else if(per>=60){
-      return('#f5d7b3')
+      return('#50fa7d')
     }
     else if(per>=40){
-      return('#b7a388')
+      return('#88f2a4')
     }else if(per>=20){
-      return('#77c0f7')
+      return('#aff0c0')
     }
-    return ('#a9ceeb')
+    return ('#dcf5e3')
 
   }
   const [percentageColor,setPercentageColor]=useState('blue')
@@ -68,10 +68,10 @@ export default function DisplayCard({c,data}) {
 
       handleColorForPercentage(data.numberofvaluesmatched,data.totalnumberofvalues)
     
-    console.log('skils ',data)
+    
   },[])
   return (
-    <Card sx={{ width: 420 ,backgroundColor:c,padding:'1rem',margin:'0px',height:'230px'}} elevation={5}>
+    <Card sx={{ width: 420 ,backgroundColor:c,padding:'1rem',margin:'0px',height:'19.625rem'}} elevation={5}>
       
       <CardContent sx={{padding:'0px',margin:'0px'}}>
         <Stack flexDirection={'row'} sx={{justifyContent:'space-between'}}>
@@ -99,6 +99,27 @@ export default function DisplayCard({c,data}) {
             {data.mentor=='true' && <Typography gutterBottom variant="h6" sx={{fontSize:'14px'}} component="div"><Chip sx={{fontSize:'14px',backgroundColor:`${handleColorForPercentage(data.numberofvaluesmatched,data.totalnumberofvalues)}`}}  icon={<StarIcon />} size='small'   label={((data.numberofvaluesmatched/data.totalnumberofvalues)*100).toFixed(2)+'%'}/></Typography>}
                 
             </Box>
+            
+        </Stack>
+        <Box>
+            <Typography gutterBottom variant="h6" sx={{fontSize:'14px',fontWeight:'bold'}} component="div">
+                {data.email}
+            </Typography>
+            </Box>
+
+        <Stack>
+
+          <Box>
+          {data.mentor=='true' && <Typography gutterBottom variant="h6" sx={{fontSize:'14px'}} component="div"><span style={{fontWeight:'bold'}}>Organization:</span> {data.organization}</Typography>}
+          {data.mentor=='true' && <Typography gutterBottom variant="h6" sx={{fontSize:'14px'}} component="div"><span style={{fontWeight:'bold'}}>Title:</span> {data.title}</Typography>}
+          {data.mentee=='true' && 
+          (Object.entries(data.education).map(([key, value]) => (
+            <li key={key}>
+              <strong style={{textTransform:'capitalize'}}>{key}:</strong> {value}
+            </li>
+          )))}
+          
+          </Box>
         </Stack>
         <Typography variant="p"  className="block-ellipsis" color="text.secondary" sx={{lineHeight:1.5}}>
           {data.additionalInformation}

@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import StarIcon from '@mui/icons-material/Star';
 import { useState } from 'react';
-export default function DisplayUserCardForHistory({c,data}) {
+export default function DisplayUserCardForHistory({c,data,index}) {
   const navigate=useNavigate()
   const dispatch=useDispatch()
   const handleResumeClick = (resid) => {
@@ -80,6 +80,7 @@ export default function DisplayUserCardForHistory({c,data}) {
                 {data.firstname}
             </Typography>
             </Box>
+            
             <Box>
                 {data.resume!='' &&
                   <Link href={`viewresume/${data.resume}`} target="_blank">
@@ -100,6 +101,11 @@ export default function DisplayUserCardForHistory({c,data}) {
                 
             </Box> */}
         </Stack>
+        <Box>
+            <Typography gutterBottom variant="h6" sx={{fontSize:'14px',fontWeight:'bold'}} component="div">
+                {data.email}
+            </Typography>
+            </Box>
         <Typography variant="p"  className="block-ellipsis" color="text.secondary" sx={{lineHeight:1.5}}>
           {data.additionalInformation}
         </Typography>

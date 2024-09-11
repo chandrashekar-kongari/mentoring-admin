@@ -21,6 +21,7 @@ const PdfViewer = () => {
         const obj={
             'resid':resid
         }
+        
         try {
             const response = await axios.post(endpoint+ '/getresume', obj);
           
@@ -29,7 +30,7 @@ const PdfViewer = () => {
                     const res=response.data.resume
                     if(res!=null){
                         setResume(`data:application/pdf;base64,${res}`);
-                        console.log(res)
+                  
                         setLoading(false)
                     }
           
@@ -48,7 +49,6 @@ const PdfViewer = () => {
     useEffect(()=>{
         
 
-        console.log('res' ,resid)
         getResume()
     },[])
 

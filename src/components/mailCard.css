@@ -1,0 +1,7 @@
+.card.disabled {
+    /* Apply styles to visually indicate that the card is disabled */
+    opacity: 0.7; /* You can adjust the opacity or apply other styles */
+    pointer-events: none; /* Prevent interactions with the card */
+
+  }
+  

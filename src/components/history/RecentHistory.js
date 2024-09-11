@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, Stack,Box } from '@mui/material';
+import { Button, Stack,Box, Typography } from '@mui/material';
 
 import DisplayCard from '../DisplayCard';
 import axios from 'axios';
@@ -15,6 +15,8 @@ import endpoint from '../../API/api';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoadingComponent from '../LoadingComponent';
 import DisplayUserCardForHistory from '../DisplayUserCardForHistory';
+import TopAppBar from '../TopAppBar';
+import { useNavigate } from 'react-router-dom';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -42,24 +44,32 @@ export default function RecentHistory() {
     const [mentees,setMentees]=React.useState([])
 
     const [loading,setLoading]=React.useState(true)
-
+    const navigate=useNavigate()
     const getData=async()=>{
+      const token=localStorage.getItem('token')
+      const axiosConfig={
+        headers:{
+          Authorization:`Bearer ${token}`,
+        },
+      };
       try {
-        const response = await axios.get(endpoint+'/recentmatches');
+        const response = await axios.get(endpoint+'/recentmatches',axiosConfig);
         if (response.status === 200) {
-          console.log('data got from server ',response.data)
+
           setMentees(response.data.mentees)
           setMentors(response.data.mentors)
-          console.log('mentees',response.data.mentees)
+         
           setLoading(false)
           
   
         }else{
+          navigate('/')
   
         }
     }
     catch(error){
-      console.log('err ',error)
+
+      navigate('/')
     }
      
     }
@@ -75,10 +85,18 @@ export default function RecentHistory() {
 
     }
   return (
+    <>
+    <TopAppBar/>
+    <Stack sx={{flexDirection:'row',justifyContent:'center',paddingTop:'1rem',paddingBottom:'1rem',backgroundColor:'#f7f7f7'}}>
+    <Typography variant='h6' sx={{fontWeight:'bold'}}>Completed matches</Typography>
+  </Stack>
     <Stack sx={{flexDirection:'row',display:'flex'}}>
       {loading?<LoadingComponent loading={loading}/>:
       <>
+      
+
       <Table sx={{ }} aria-label="simple table">
+        
         <TableHead>
           <TableRow>
             
@@ -90,13 +108,16 @@ export default function RecentHistory() {
         </TableHead>
         <TableBody sx={{float:'right'}}>
         
-          {mentees.map((row) => (
+          {mentees.map((row,index) => (
             <TableRow
               key={row._id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 ,justifyContent:'left',flex:'1'} }}
             >
-              <TableCell component="th" scope="row" align="left"> 
-              <DisplayUserCardForHistory c={'white'} data={row}/>
+              <TableCell component="th" scope="row" align="left" > 
+              <Stack sx={{flexDirection:'row'}}>
+                <Typography sx={{mr:3}}>{index+1}</Typography>
+              <DisplayUserCardForHistory c={'white'} index={index} data={row}/>
+              </Stack>
               </TableCell>
               
              
@@ -109,6 +130,7 @@ export default function RecentHistory() {
           
         </TableBody>
       </Table>
+   
       <Table sx={{ }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -150,6 +172,6 @@ export default function RecentHistory() {
 
         
       
-    </Stack>
+    </Stack></>
   );
 }

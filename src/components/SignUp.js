@@ -19,7 +19,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch,useSelector} from 'react-redux'
 import { useEffect } from 'react';
 
-const Login = ({setAuth}) => {
+const SignUp = ({setAuth}) => {
  
     const navigate=useNavigate()
     const dispatch=useDispatch()
@@ -33,47 +33,49 @@ const Login = ({setAuth}) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    const handleLogin=async(e)=>{
+    const handleSignUp=async(e)=>{
       e.preventDefault()
       setLoading(true)
         const obj={
             'email':gmail,
-            'password':password
+            'password':password,
+            'sign_up_key':signUpKey
         }
         try {
-        const response = await axios.post(endpoint+ '/adminsignin', obj);
+        const response = await axios.post(endpoint+ '/adminsignup', obj);
       
             if (response.status === 200) {
               const user=response.data.user
-              console.log('res ',response.data)
+   
               if(user==null || Object.keys(user).length === 0){
+
                 setLoading(false)
-                setErrorMessage('Something went wrong')
+                setErrorMessage(response.data.message)
                 handleShowAlert(true)
                 return
               }
               else{
-               
-                
-                const token=response.data.token
+               const token=response.data.token
                 
                 localStorage.setItem('auth', 'true');
                 localStorage.setItem('token',token)
                 navigate('/homepage');
                 
+         
                 return
               }
               
       
             } else {
               setLoading(false)
+         
               setErrorMessage('Something went wrong')
                 handleShowAlert(true)
                 return
               }
             } catch (error) {
-            setLoading(false)
-
+              setLoading(false)
+  
             setErrorMessage('Something went wrong')
                 handleShowAlert(true)
                 return
@@ -104,7 +106,7 @@ const Login = ({setAuth}) => {
             }
             const res= await axios.post(endpoint+'auth',p);
               if(res.status === 200){
-
+        
                 const s=res.data
                 
                 if(s.status){
@@ -116,11 +118,11 @@ const Login = ({setAuth}) => {
                 }
               }
               else {
-  
+               
                 setLoading(true)
               }
             } catch (error) {
-
+           
               setLoading(true)
             }    
     }
@@ -138,9 +140,11 @@ const Login = ({setAuth}) => {
       setLoading(false)
     },[])
 
-    const handleCreateAccount=()=>{
-      navigate('/signup')
+    const handleLoginNav=()=>{
+      navigate('/')
     }
+    
+    const [signUpKey,setSignUpKey]=useState('')
 
   return (
     <>
@@ -160,9 +164,7 @@ const Login = ({setAuth}) => {
      
    
      <Stack sx={{height:'100%',justifyContent:'center',textAlign:'center'}}>
-     <Typography sx={{fontWeight:'bold'}}>Login to admin dashboard </Typography>
-     <Typography sx={{fontWeight:'bold'}}>please login on laptop only, don't login on mobile</Typography>
-
+   
         
          <Box sx={{boxShadow: 3,
                  borderRadius: 2,
@@ -177,7 +179,7 @@ const Login = ({setAuth}) => {
                          height: '50%', // Adjust the height as needed
          }}/></Link>
                      </Box>
-             <form onSubmit={handleLogin}>
+             <form onSubmit={handleSignUp}>
              <Stack direction='column' >
              <FormControl variant="outlined">
                      <InputLabel >Email</InputLabel>
@@ -192,7 +194,7 @@ const Login = ({setAuth}) => {
                          required
                      />
                      </FormControl>
-                 <Box sx={{flex:1,width:'100%',paddingTop:'1rem'}}>
+                 <Box sx={{flex:1,width:'100%',py:'1rem'}}>
              
                  <FormControl variant="outlined" style={{width:'100%'}} >
                      <InputLabel >Password</InputLabel>
@@ -218,10 +220,24 @@ const Login = ({setAuth}) => {
                          required
                      />
                      </FormControl>
-                     </Box>
 
+                     
+                     </Box>
+                     <FormControl variant="outlined">
+                     <InputLabel >SignUp Key</InputLabel>
+                     <OutlinedInput
+                     name='SignUp Key'
+                     value={signUpKey}
+                     onChange={(e)=>setSignUpKey(e.target.value)}
+                        
+                         type={'text'}
+                         
+                         label="SignUp Key"
+                         required
+                     />
+                     </FormControl>
                      <Box sx={{textAlign:'left',mt:2}}>
-                      <Button onClick={handleCreateAccount} variant='text' color='info' sx={{textTransform:'capitalize', fontSize:'12px'}}>Create an Account</Button>
+                      <Button onClick={handleLoginNav} variant='text' color='info' sx={{textTransform:'capitalize', fontSize:'12px'}}>Log in</Button>
                      </Box>
                      
                      <Button
@@ -235,7 +251,7 @@ const Login = ({setAuth}) => {
                          },}}
                          
                      >
-                         Login <FontAwesomeIcon style={{paddingLeft:'1rem'}} icon={faArrowRight} />
+                         Sign Up <FontAwesomeIcon style={{paddingLeft:'1rem'}} icon={faArrowRight} />
                      </Button>
                     
              </Stack>
@@ -249,4 +265,4 @@ const Login = ({setAuth}) => {
   )
 }
 
-export default Login
+export default SignUp

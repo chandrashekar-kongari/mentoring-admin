@@ -20,40 +20,46 @@ import MatchMaking from './components/matchmaking/MatchMaking';
 import RecentHistory from './components/history/RecentHistory';
 import PdfViewer from './components/PdfViewer';
 import {useSelector} from 'react-redux'
+import SignUp from './components/SignUp';
+import { PrivateRoutes } from './components/PrivateRoutes';
+import MailSystem from './components/MailSystem';
+import ManualMatch from './components/ManualMatch';
+import RecentHistory2 from './components/history/RecentHistory2';
 const App = () => {
 
   const [auth,setAuth]=useState(false)
   const resid=useSelector(state=>state.resid)
   useEffect(()=>{
-    const data = localStorage.getItem('auth');
-    console.log('local ',data)
-    if(data=='true'){
-      setAuth(true)
-    }
-    setLoading(false)
+   
   },[])
 
   const [loading,setLoading]=useState(true)
   
   return (
-    // <MakeMatch/>
+
     <>
 
-    {loading?<CircularProgress/>:<>
-    {auth==true?
-      <>
-      <SideNav setAuth={setAuth}/>
-      <Routes>
-            <Route path="/" element={<HomePage/>}/>
-            <Route path="/matching" element={<MakeMatch/>}/>
-            <Route path="/ongoingmentorships" element={<OnGoingMentorships/>}/>
-            <Route path="/matchmaking" element={<MatchMaking/>}/>
-            <Route path="/recentmatches" element={<RecentHistory/>}/>
-            <Route path='/viewresume/:resid' element={<PdfViewer  />}/>   
-      </Routes>
-      </>:<Login setAuth={setAuth}/>}</>}
       
-    </>
+      <Routes>
+      <Route element={<PrivateRoutes/>}>
+
+            <Route path="/homepage" element={<HomePage/>}/>
+            {/* <Route path="/matching" element={<MakeMatch/>}/>
+            <Route path="/ongoingmentorships" element={<OnGoingMentorships/>}/> */}
+            <Route path="/matchmaking" element={<MatchMaking/>}/>
+            <Route path="/recentmatches" element={<RecentHistory2/>}/>
+            <Route path='/viewresume/:resid' element={<PdfViewer  />}/>
+            <Route path='/mail-system' element={<MailSystem/>}/>
+            <Route path='/manual-match' element={<ManualMatch/>}/>
+            <Route path="/allusers" element={<AllUsers/>}/>
+        </Route>
+            <Route path="/" element={<Login/>}/>
+            <Route path='/signup' element={<SignUp/>}/>
+               
+      </Routes>
+  
+      
+ </>
   )
 }
 export default App
