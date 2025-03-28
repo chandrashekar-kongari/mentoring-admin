@@ -7,7 +7,7 @@ import TopAppBar from './TopAppBar'
 const HomePage = () => {
   return (
     <>
-    {/* <SideNav /> */}
+
     <TopAppBar/>
     <Container>
       <Stack sx={{justifyContent:'center',flex:1,flexDirection:'row',paddingTop:'2rem'}}>
